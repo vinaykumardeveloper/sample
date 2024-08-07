@@ -1,0 +1,38 @@
+.App {
+  text-align: center;
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+h1 {
+  font-size: 48px;
+  color: #333;
+}
+
+.NavigationButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+ 
