@@ -1,0 +1,19 @@
+.language-selector {
+    margin: 20px 0;
+  }
+  
+  .language-selector button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .language-selector button:hover {
+    background-color: #45a049;
+  }
+  

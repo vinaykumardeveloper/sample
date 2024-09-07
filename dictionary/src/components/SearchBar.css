@@ -1,0 +1,86 @@
+/* .search-form {
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 300px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .search-button:hover {
+    background-color: #45a049;
+  }
+   */
+
+   .search-form {
+    display: inline-block;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 300px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .search-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Styles for suggestions */
+  .suggestions-list {
+    margin: 10px 0 0 0;
+    padding: 0;
+    list-style-type: none;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    justify-content: center;
+  }
+  
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .suggestions-box {
+    justify-content: center;
+    padding: 0px 470px;
+  }
+  
