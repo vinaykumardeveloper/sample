@@ -1,0 +1,80 @@
+/* 
+   .meaning-container {
+    margin-top: 20px;
+  }
+  
+  .word-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .meaning-row {
+    display: flex;
+    align-items: center;
+  }
+  
+  .word-meaning {
+    font-size: 18px;
+    color: #555;
+    margin-right: 10px;
+  }
+  
+  .speaker-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #4CAF50;
+  }
+  
+  .speaker-button:hover {
+    color: #45a049;
+  }
+  
+  .word-meaning-telugu {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+  }
+   */
+
+   .meaning-container {
+    margin-top: 20px;
+  }
+  
+  .word-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .meaning-row {
+    display: flex;
+    align-items: center;
+  }
+  
+  .word-meaning {
+    font-size: 18px;
+    color: #555;
+    margin-right: 10px;
+    padding: 0px 450px;
+  }
+  
+  .speaker-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #4CAF50;
+    padding: 0px;
+  }
+  
+  .speaker-button:hover {
+    color: #45a049;
+  }
+  
+  .word-meaning-lang {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+  }
+  
