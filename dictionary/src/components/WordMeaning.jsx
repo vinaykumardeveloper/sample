@@ -1,7 +1,7 @@
 import React from 'react';
 import './WordMeaning.css';
 
-const WordMeaning = ({ word, meaning, meaningInLang }) => {
+const WordMeaning = ({ word, meaning, meaningInLang, language }) => {
   
   const speakMeaning = () => {
     if (meaning) {
@@ -25,7 +25,12 @@ const WordMeaning = ({ word, meaning, meaningInLang }) => {
           </button>
         )}
       </div>
-      <p className="word-meaning-lang">Meaning in Selected Language: {meaningInLang ? meaningInLang : 'No meaning found'}</p>
+      {language !=='' &&(
+        <p className="word-meaning-lang">Meaning in Selected Language: {meaningInLang ? meaningInLang : 'No meaning found'}</p>
+      ) 
+    }
+      
+      
     </div>
   );
 };

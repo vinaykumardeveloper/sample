@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios
 import SearchBar from './components/SearchBar';
 import WordMeaning from './components/WordMeaning';
 import LanguageSelector from './components/LanguageSelector';
@@ -9,16 +10,17 @@ const App = () => {
   const [word, setWord] = useState('');
   const [meaning, setMeaning] = useState(null);
   const [meaningInLang, setMeaningInLang] = useState(null);
-  const [language, setLanguage] = useState('te'); // Default to Telugu
+  const [language, setLanguage] = useState(''); // Default to Telugu
   const [suggestions, setSuggestions] = useState([]);
   const [images, setImages] = useState([]);
 
+  // Fetch word meaning
   const fetchWordMeaning = async (searchWord) => {
     try {
-      const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchWord}`);
-      const data = await response.json();
-      if (data[0] && data[0].meanings) {
-        const englishMeaning = data[0].meanings[0].definitions[0].definition;
+      const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchWord}`);
+      if (response.data[0] && response.data[0].meanings) {
+        console.log("chaeking response1234:", JSON.stringify(response.data[0].meanings[0].definitions[0].definition));
+        const englishMeaning = response.data[0].meanings[0].definitions[0].definition;
         setMeaning(englishMeaning);
         translateToLanguage(englishMeaning, language);
         fetchImages(englishMeaning);
@@ -34,34 +36,46 @@ const App = () => {
     }
   };
 
-  const translateToLanguage = async (englishMeaning, langCode) => {
+  // Translate meaning to selected language
+  const translateToLanguage = async (englishMeaning, language) => {
     try {
-      const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(englishMeaning)}&langpair=en|${langCode}`);
-      const data = await response.json();
-      setMeaningInLang(data.responseData.translatedText);
+      const response = await axios.get(`https://api.mymemory.translated.net/get`, {
+        params: {
+          q: englishMeaning,
+          langpair: `en|${language}`
+        }
+      });
+      setMeaningInLang(response.data.responseData.translatedText);
     } catch (error) {
       setMeaningInLang('Error translating the meaning');
     }
   };
 
+  // Fetch images based on the word meaning
   const fetchImages = async (query) => {
     try {
-      const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=5`, {
+      const response = await axios.get(`https://api.pexels.com/v1/search`, {
         headers: {
           Authorization: 'GogdJgkRC1K5ysgow5lyI4jqmPIRwMhcz3BZ4DPJXaIJ5rMUsEA1kG1S' // Replace with your actual Pexels API key
+        },
+        params: {
+          query,
+          per_page: 5
         }
       });
-      const data = await response.json();
-      setImages(data.photos.map(photo => photo.src.small));
+      setImages(response.data.photos.map(photo => photo.src.small));
     } catch (error) {
       setImages([]);
     }
   };
+
+  // Fetch word suggestions
   const fetchSuggestions = async (inputWord) => {
     try {
-      const response = await fetch(`https://api.datamuse.com/sug?s=${inputWord}`);
-      const data = await response.json();
-      setSuggestions(data.map(suggestion => suggestion.word));
+      const response = await axios.get(`https://api.datamuse.com/sug`, {
+        params: { s: inputWord }
+      });
+      setSuggestions(response.data.map(suggestion => suggestion.word));
     } catch (error) {
       setSuggestions([]);
     }
@@ -73,23 +87,34 @@ const App = () => {
     fetchWordMeaning(searchWord);
   };
 
-  const handleLanguageChange = (langCode) => {
-    setLanguage(langCode);
+  const handleLanguageChange = (language) => {
+    setLanguage(language);
     if (meaning) {
-      translateToLanguage(meaning, langCode);
+      translateToLanguage(meaning, language);
     }
   };
 
   return (
     <div className="app-container">
       <h1 className="app-title">Dictionary App</h1>
-      <SearchBar onSearch={handleSearch} onInputChange={fetchSuggestions} suggestions={suggestions} />
-      <LanguageSelector onLanguageChange={handleLanguageChange} />
-      <WordMeaning word={word} meaning={meaning} meaningInLang={meaningInLang} />
+      <SearchBar 
+      onSearch={handleSearch} 
+      onInputChange={fetchSuggestions} 
+      suggestions={suggestions} 
+      />
+
+      <LanguageSelector 
+      onLanguageChange={handleLanguageChange} 
+      />
+
+      <WordMeaning 
+      word={word} meaning={meaning} meaningInLang={meaningInLang} 
+      language={language}
+      />
+
       <ImageGallery images={images} />
     </div>
   );
 };
 
 export default App;
-
