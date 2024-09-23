@@ -35,4 +35,5 @@ const WordMeaning = ({ word, meaning, meaningInLang, language }) => {
   );
 };
 
+
 export default WordMeaning;

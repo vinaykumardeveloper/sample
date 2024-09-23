@@ -22,4 +22,5 @@ const SetDefaultLanguage = ({ onLanguageChange }) => {
   );
 };
 
+
 export default SetDefaultLanguage;

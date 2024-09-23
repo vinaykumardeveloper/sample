@@ -12,4 +12,5 @@ const LanguageSelector = ({ onLanguageChange }) => {
   );
 };
 
+
 export default LanguageSelector;
