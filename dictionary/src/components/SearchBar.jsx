@@ -1,47 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './SearchBar.css';
 
 const SearchBar = ({ onSearch, onInputChange, suggestions }) => {
   const [inputValue, setInputValue] = useState('');
-  const suggestionsRef = useRef(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const suggestionBoxRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    // Close suggestions only if clicking outside the suggestion box
+    if (suggestionBoxRef.current && !suggestionBoxRef.current.contains(event.target)) {
+      setShowSuggestions(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim()) {
       onSearch(inputValue);
+      setShowSuggestions(false); // Hide suggestions on search
     }
   };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
     onInputChange(e.target.value);
+    setShowSuggestions(true); // Show suggestions while typing
   };
-
-  // Handle clicks outside of the suggestions box
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-        // Clear suggestions if clicked outside the list
-        onInputChange('');  
-      }
-    };
-
-    // Add event listener for clicks
-    document.addEventListener('click', handleClickOutside);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [onInputChange]);
 
   const handleSuggestionClick = (suggestion) => {
     setInputValue(suggestion);
     onSearch(suggestion);
+    setShowSuggestions(false); // Hide suggestions after selection
   };
 
   return (
-    <div>
+    <div onMouseDown={handleClickOutside}>
       <form onSubmit={handleSubmit} className="search-form">
         <input
           type="text"
@@ -52,18 +45,26 @@ const SearchBar = ({ onSearch, onInputChange, suggestions }) => {
         />
         <button type="submit" className="search-button">Search</button>
       </form>
-      <div className='suggestions-box'>
-        {/* Display suggestions as a dropdown */}
-        {suggestions.length > 0 && (
-          <ul ref={suggestionsRef} className="suggestions-list">
+
+      {showSuggestions && suggestions.length > 0 && (
+        <div 
+          className='suggestions-box' 
+          ref={suggestionBoxRef}
+          onMouseDown={(e) => e.stopPropagation()} // Prevent closing when clicking inside the suggestion box
+        >
+          <ul className="suggestions-list">
             {suggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="suggestion-item">
+              <li 
+                key={index} 
+                onClick={() => handleSuggestionClick(suggestion)} 
+                className="suggestion-item"
+              >
                 {suggestion}
               </li>
             ))}
           </ul>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -73,12 +74,22 @@ export default SearchBar;
 
 
 
-// import React, { useState, useEffect, useRef } from 'react';
+
+
+// import React, { useState,useRef  } from 'react';
 // import './SearchBar.css';
 
 // const SearchBar = ({ onSearch, onInputChange, suggestions }) => {
 //   const [inputValue, setInputValue] = useState('');
-//   const suggestionsRef = useRef(null);
+//   const [showSuggestions, setShowSuggestions] = useState(true);
+//   const suggestionBoxRef = useRef(null);
+
+//   const handleClickOutside = (event) => {
+//     if (suggestionBoxRef.current && !suggestionBoxRef.current.contains(event.target)) {
+//       setShowSuggestions(false);
+//     }
+//   };
+
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
@@ -92,21 +103,6 @@ export default SearchBar;
 //     onInputChange(e.target.value);
 //   };
 
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-//         // Clear suggestions if clicked outside the list
-//         onInputChange('');  
-//       }
-//     };
-  
-
-//     document.addEventListener('click', handleClickOutside);
-
-//     return () => {
-//       document.removeEventListener('click', handleClickOutside);
-//     };
-//   }, [suggestionsRef, onInputChange]);
 
 //   const handleSuggestionClick = (suggestion) => {
 //     setInputValue(suggestion);
@@ -114,7 +110,7 @@ export default SearchBar;
 //   };
 
 //   return (
-//     <div>
+//     <div onMouseDown={handleClickOutside}>
 //       <form onSubmit={handleSubmit} className="search-form">
 //         <input
 //           type="text"
@@ -125,89 +121,22 @@ export default SearchBar;
 //         />
 //         <button type="submit" className="search-button">Search</button>
 //       </form>
-//     <div className='suggestions-box'>
-//       {/* Display suggestions as a dropdown */}
-      
-//       {suggestions.length > 0 && (
-//         <ul ref={suggestionsRef} className="suggestions-list">
-//           {suggestions.map((suggestion, index) => (
-//             <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="suggestion-item">
-//               {suggestion}
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//       </div>
+//       {showSuggestions && (
+//       <div className='suggestions-box' ref={suggestionBoxRef}>
+//         {/* Display suggestions as a dropdown */}
+//         {suggestions.length > 0 && (
+//           <ul className="suggestions-list">
+//             {suggestions.map((suggestion, index) => (
+//               <li key={index} onClick={() => handleSuggestionClick(suggestion)} className="suggestion-item">
+//                 {suggestion}
+//               </li>
+//             ))}
+//           </ul>
+//         )}
+//       </div>)}
+
 //     </div>
 //   );
 // };
 
 // export default SearchBar;
-
-
-
-// import React, { useState, useEffect, useRef } from 'react';
-// import './SearchBar.css';
-
-// const SearchBar = ({ onSearch, onInputChange, suggestions }) => {
-//   const [inputValue, setInputValue] = useState('');
-//   const suggestionsRef = useRef(null);  // Reference for suggestions list
-
-//   const handleInputChange = (e) => {
-//     const value = e.target.value;
-//     setInputValue(value);
-//     onInputChange(value);  // Pass the input value to parent for suggestions
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (inputValue.trim()) {
-//       onSearch(inputValue);
-//     }
-//   };
-
-//   // Handle click outside of the suggestions list
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-//         // Clear suggestions if clicked outside the list
-//         onInputChange('');  
-//       }
-//     };
-
-//     document.addEventListener('click', handleClickOutside);
-
-//     // Cleanup event listener on component unmount
-//     return () => {
-//       document.removeEventListener('click', handleClickOutside);
-//     };
-//   }, [suggestionsRef, onInputChange]);
-
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit} className='search-form'>
-//         <input
-//           type="text"
-//           value={inputValue}
-//           onChange={handleInputChange}
-//           placeholder="Search for a word"
-//         />
-//         <button type="submit">Search</button>
-//       </form>
-//       <div className='suggestions-box'>
-//       {suggestions.length > 0 && (
-//         <ul ref={suggestionsRef} className="suggestions-list">
-//           {suggestions.map((suggestion, index) => (
-//             <li key={index} onClick={() => onSearch(suggestion)} className="suggestions-list">
-//               {suggestion}
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchBar;
-

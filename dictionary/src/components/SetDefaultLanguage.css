@@ -1,0 +1,62 @@
+select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #4CAF50; /* One simple green color */
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 220px;
+  }
+  
+  select:hover {
+    border-color: #45a049; /* Slightly darker green when hovering */
+  }
+  
+  select:focus {
+    border-color: #388E3C; /* Darker green on focus */
+  }
+  
+  option {
+    color: #333;
+  }
+  
+  option[disabled] {
+    color: #999;
+  }
+  label {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+  }
+  
+  select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #4CAF50; /* One simple green color */
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 220px;
+  }
+  
+  select:hover {
+    border-color: #45a049; /* Slightly darker green when hovering */
+  }
+  
+  select:focus {
+    border-color: #388E3C; /* Darker green on focus */
+  }
+  
+  option {
+    color: #333;
+  }
+  
+  option[disabled] {
+    color: #999;
+  }
