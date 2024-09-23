@@ -31,13 +31,14 @@
     display: inline-block;
     margin-bottom: 30px;
     position: relative;
+    padding: 50px 0px 0px 40px;
   }
   
   .search-input {
-    padding: 10px;
+    padding: 10px 30px 10px 10px;
     width: 300px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #88c405;
     border-radius: 4px;
   }
   
@@ -47,7 +48,7 @@
     font-size: 16px;
     border: none;
     background-color: #4CAF50;
-    color: white;
+    color: rgb(220, 230, 221);
     cursor: pointer;
     border-radius: 4px;
   }
