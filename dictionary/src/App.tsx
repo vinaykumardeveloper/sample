@@ -9,15 +9,11 @@ import SetDefaultLanguage from "./components/SetDefaultLanguage";
 
 const App = () => {
   const [word, setWord] = useState("");
-  const [meaning, setMeaning] = useState(null);
-  const [meaningInLang, setMeaningInLang] = useState(null);
+  const [meaning, setMeaning] = useState('');
+  const [meaningInLang, setMeaningInLang] = useState('');
   const [language, setLanguage] = useState(''); // Default to Telugu
   const [suggestions, setSuggestions] = useState([]);
   const [images, setImages] = useState([]);
-
-
-
-
 
   // Fetch word meaning
   const fetchWordMeaning = async (searchWord) => {
@@ -142,5 +138,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;

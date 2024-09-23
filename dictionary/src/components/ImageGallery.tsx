@@ -9,7 +9,7 @@ const ImageGallery = ({ images }) => {
           <img key={index} src={image} alt="related to meaning" className="gallery-image" />
         ))
       ) : (
-        <p>No images found</p>
+        <p>No images found..</p>
       )}
     </div>
   );
