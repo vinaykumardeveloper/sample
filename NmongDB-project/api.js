@@ -4,6 +4,7 @@ const path = require('path');
 const db = require('./db');
 const cors = require('cors');
 
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -50,12 +51,17 @@ app.delete('/mobiles', (req, res) => {
 });
 
 // Bulk upload mobiles
-app.post('/mobiles/bulk', (req, res) => {
-    const mobiles = req.body;
-    if (!Array.isArray(mobiles)) {
-        return res.status(400).send("Request body must be an array");
+app.post("/mobiles/bulk", async(req, res) => {
+    const {mdata} = req.body;
+    const data={
+        mdata:mdata
     }
-    db.addMultipleMobiles(mobiles)
-        .then(() => res.status(201).send("Mobiles added successfully!"))
-        .catch(err => res.status(500).send("Failed to upload mobiles"));
+    await collection.insertMany([data])
+    // if (!Array.isArray(mobiles)) {
+    //     return res.status(400).send("Request body must be an array");
+    // }
+    // db.addMultipleMobiles([data])
+    //     .then(() => res.status(201).send("Mobiles added successfully!"))
+    //     .catch(err => res.status(500).send("Failed to upload mobiles"));
+    
 });

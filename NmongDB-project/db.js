@@ -12,6 +12,17 @@ const mobileSchema = new mongoose.Schema({
     storage: String, // Ensure storage is treated as a string
 });
 
+
+const collectionOfMobiles= new mongoose.Schema({
+
+    mdata:{
+        type:Array,
+        required:true
+    }
+})
+
+const collection=mongoose.model("collection",collectionOfMobiles)
+
 // Create the model for the 'mobiles' collection
 const Mobile = mongoose.model('Mobile', mobileSchema, 'mobilesColl');
 
@@ -47,4 +58,5 @@ module.exports = {
     updateMobiles,
     deleteMobiles,
     addMultipleMobiles,
+    collection,
 };

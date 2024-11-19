@@ -4,6 +4,7 @@ import axios from 'axios';
 import Papa from 'papaparse';
 import './MobileManagement.css';
 
+
 const apiBaseUrl = "http://localhost:5004"; // Your backend URL
 
 const MobileManagement = () => {
@@ -12,6 +13,7 @@ const MobileManagement = () => {
     const [price, setPrice] = useState('');
     const [storage, setStorage] = useState('');
     const [showMobiles,setShowMobiles] = useState(false)
+    const [mdata,setMData]=useState([])
 
     useEffect(() => {
         getAllMobiles();
@@ -27,6 +29,7 @@ const MobileManagement = () => {
     };
 
     const addMobile = async (e) => {
+       
         e.preventDefault();
         try {
             await axios.post(`${apiBaseUrl}/mobiles`, { name, price, storage });
@@ -72,31 +75,33 @@ const MobileManagement = () => {
     };
 
     const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        console.log(event.target.value)
-        Papa.parse(file, {
-            header: true,
-            complete: async (results) => {
-                try {
-                    const mobilesData = results.data.map((row) => ({
-                        name: row.name,
-                        price: row.price,
-                        storage: row.storage,
-                    }));
+        
+        const file=event.target.files[0];
+      Papa.parse(file,{
+        header:true,
+        complete:(results)=>{
+            const modifiedData = results.data.slice(0, -1);
+            setMData(modifiedData);
+        }
+      })
+      
+    
+    }; 
 
-                    await axios.post(`${apiBaseUrl}/mobiles/bulk`, mobilesData);
-                    alert("Mobiles uploaded successfully!");
-                    getAllMobiles();
-                } catch (error) {
-                    alert("Failed to upload mobiles");
-                }
-            },
-            error: (error) => {
-                console.error("Error details123:", error);
-                alert("Failed to parse file");
-            }
-        });
-    };
+    const onSubmittingFile= async(e)=>{
+         e.preventDefault();
+         console.log(mdata)
+     try{
+         await axios.post(`${apiBaseUrl}/mobiles/bulk`, mdata )
+            alert("Mobile added successfully!");
+            getAllMobiles();
+            addMobile();
+            // selllllllllllllllllllllllllllllll
+        }
+        catch{
+          console.log(e)
+        }
+    }
 
     return(
 
@@ -105,7 +110,7 @@ const MobileManagement = () => {
              {/* Upload CSV */}
              <h2>Upload</h2>
             <input type="file" accept=".csv" onChange={handleFileUpload} />
-
+            <button onClick={onSubmittingFile}>Submit File</button>
 
             <h2>Add Mobile</h2>
             <form onSubmit={addMobile}>
@@ -142,7 +147,7 @@ const MobileManagement = () => {
             <div id="mobileList" style={{ display: mobiles.length ? 'block' : 'none' }}>
                 {mobiles.map((mobile) => (
                     <div key={mobile._id}>
-                        <strong>ID:</strong> {mobile._id},
+                        {/* <strong>ID:</strong> {mobile._id}, */}
                         <strong>Name:</strong> {mobile.name},
                         <strong>Price:</strong> {mobile.price},
                         <strong>Storage:</strong> {mobile.storage}

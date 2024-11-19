@@ -10,6 +10,7 @@ const ImageGallery = ({ images }) => {
         ))
       ) : (
         <p>No images found..</p>
+        
       )}
     </div>
   );
